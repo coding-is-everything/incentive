@@ -6,8 +6,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
-
 <!-- jQuery -->
 <script src="<?php echo base_url() ?>public/admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -23,6 +21,8 @@
 <!-- Bootstrap 4 -->
 <!-- DataTables  & Plugins -->
 <script src="<?php echo base_url() ?>public/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 <script src="<?php echo base_url() ?>public/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?php echo base_url() ?>public/admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url() ?>public/admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
@@ -35,18 +35,46 @@
 <script src="<?php echo base_url() ?>public/admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="<?php echo base_url() ?>public/admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <script>
+  var minDate, maxDate;
+  $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date( data[4] );
+ 
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
+            return true;
+        }
+        return false;
+    }
+);
   $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+    minDate = new DateTime($('#min'), {
+      format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#max'), {
+      format: 'MMMM Do YYYY'
+    });
+
+    var table = $("#example1").DataTable({
+      "responsive": true, "lengthChange": true, "autoWidth": true,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#min, #max').on('change', function() {
+      
+    });
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "lengthChange": true,
+      "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
       "responsive": true,
     });
   });
@@ -60,8 +88,6 @@
 <script src="<?php echo base_url() ?>public/admin/plugins/inputmask/jquery.inputmask.min.js"></script>
 <!-- date-range-picker -->
 <script src="<?php echo base_url() ?>public/admin/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- bootstrap color picker -->
-<script src="<?php echo base_url() ?>public/admin/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?php echo base_url() ?>public/admin/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Bootstrap Switch -->
@@ -93,6 +119,14 @@
     });
 
     $('#reservationdate1').datetimepicker({
+        format: 'L'
+    });
+
+     $('#reservationdate2').datetimepicker({
+        format: 'L'
+    });
+
+      $('#reservationdate3').datetimepicker({
         format: 'L'
     });
 

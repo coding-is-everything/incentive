@@ -5,18 +5,16 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Manage Course</h1>
+            <h1><?php echo $title; ?></h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active"><a href="<?php echo site_url() ?>/Layout/courseAdd"><i class="fa fa-plus">&nbsp;Add Course</i></a></li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -28,26 +26,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Sr.No</th>
-                    <th>Course</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>ghfghfg</td>
-                    <td>Active</td>
-                    <td><a href="#"><i class="fa fa-edit" style="font-size:20px"></i></a>&nbsp;
-                        <a href="#"><i class="fa fa-trash" style="font-size:20px;"></i></a></td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+    <div class="col-md-6">
+                <p class="card-text"><b>Name:</b> <?php echo $course['courseName']; ?></p>
+                <p class="card-text"><b>Price:</b> <?php echo $course['coursePrice']; ?></p>
+                <p class="card-text"><b>Status:</b> <?php  if($course['courseStatus'] == '1') echo "Active"; else echo "Inactive"; ?></p>
+                <a href="<?php echo site_url('Course/course_tab'); ?>" class="btn btn-primary">Back To List</a>
+    </div></div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
